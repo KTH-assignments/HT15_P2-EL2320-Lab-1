@@ -1,0 +1,6 @@
+\subsection{Question 5}
+	The update step is given by equation \ref{}
+	bel(x t ) = p(x t |u 1:t , z 1:t−1 , x 0 , M ) = p(x t |u t , x t−1 )bel(x t−1 )dx t−1
+	\begin{equation}
+		\hat{bel}(x_t) = p(x_t | u_{1:t}, z_{1:t}, \bar{x}_0, M) = \int
+	\end{equation}

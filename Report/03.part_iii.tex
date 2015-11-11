@@ -1,0 +1,13 @@
+\subsection{Question 5}
+	In equation 3 of the instructions, the prediction step is given by equation \ref{eq:part_iii_prediction}, 
+	while the update step is given by \ref{eq:part_iii_update}.
+	
+	\begin{equation}
+		\overline{bel}(x_t) = p(x_t | u_{1:t}, z_{1:t-1}, \bar{x}_0, M) = \int p(x_t | u_t, x_{t-1}) bel(x_{t-1}) dx_{t-1}
+		\label{eq:part_iii_prediction}
+	\end{equation}
+	
+	\begin{equation}
+		bel(x_t) = p(x_t | u_{1:t}, z_{1:t}, \bar{x}_0, M) = \eta p(z_t | x_t, M) \overline{bel}(x_t)
+		\label{eq:part_iii_update}
+	\end{equation}

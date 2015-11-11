@@ -1,0 +1,179 @@
+\subsection{Question 1}
+	In this case $\epsilon_k: 2 \times 1$, $\delta_k:$ scalar. In the general case, $\epsilon_k$ will be $N \times 1$, where $N$ is
+	the number of state variables, and $\delta_k$ will be $M \times 1$, where $M$ is the number of variables the EKF tries to estimate.
+	\\
+	A scalar Gaussian is characterized by a mean value $\mu$ and a variance $\sigma^2$. A white Gaussian has $\mu = 0$.
+	In the general case, $\boldsymbol{\mu}$ is a single-column matrix and the scalar variance is replaced by a covariance matrix
+	$\boldsymbol{\Sigma}$. In this case, a white Gaussian has $\boldsymbol{\mu} = \boldsymbol{0}$ and $\boldsymbol{\Sigma}$ is a
+	diagonal matrix because the noise in each state variable is independent of one another.
+
+\subsection{Question 2}
+
+\begin{table}[!htb]
+	\centering
+    \begin{tabular}{l|l}
+    Variable & Usage                                                    \\ \hline
+    $x$        & The true state of the system.							  \\
+    $\hat{x}$  & The estimate of the true state of the system by the EKF.\\
+    $P$        & Estimate error covariance matrix.                       \\
+    $G$        & Identity matrix for dimensionality consistency.          \\
+    $D$        & Identity matrix for dimensionality consistency. Scalar here. \\
+    $Q$        & Measurement noise variance.         \\
+    $R$        & Process noise covariance matrix.                    \\
+    $wStdP$    & The actual (simulated) standard deviation of the noise in position.            \\
+    $wStdV$    & The actual (simulated) standard deviation of the noise in velocity.            \\
+    $vStd$     & The actual (simulated) standard deviation of the noise in position estimation. \\
+    $u$        & Control signal, the acceleration.                       \\
+    $PP$       & Estimate error covariances over time.                              \\
+    \end{tabular}
+\end{table}
+
+
+\subsection{Question 3}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/normal_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/normal_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/normal_fig_3}}
+
+	\caption{Estimation error, covariance and Kalman gain. $Q,R$ default.}
+	\label{fig:q3:normal}
+\end{figure}
+
+
+\subsubsection{One change in the default parameters at a time}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100_fig_3}}
+
+	\caption{$Q \times 100,R$ default.}
+	\label{fig:q3:Qx100}
+\end{figure}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100_fig_3}}
+
+	\caption{$Q / 100,R$ default.}
+	\label{fig:q3:Q-100}
+\end{figure}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Rx100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Rx100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Rx100_fig_3}}
+
+	\caption{$Q$ default, $R \times 100$.}
+	\label{fig:q3:Rx100}
+\end{figure}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/R-100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/R-100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/R-100_fig_3}}
+
+	\caption{$Q$ default, $R / 100$.}
+	\label{fig:q3:R-100}
+\end{figure}
+
+
+\subsubsection{Change in the default parameters at the same time}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100R-100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100R-100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Q-100R-100_fig_3}}
+
+	\caption{$Q / 100, R / 100$}
+	\label{fig:q3:Q-R-100}
+\end{figure}
+
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100Rx100_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100Rx100_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_3/Qx100Rx100_fig_3}}
+
+	\caption{$Q \times 100, R \times 100$.}
+	\label{fig:q3:QxRx100}
+\end{figure}
+
+\subsubsection{Conclusion}
+	Comparing figure \ref{fig:q3:Qx100} with figure \ref{fig:q3:normal} we see that when the measurement noise increases,
+	the covariance of the error in estimating the true position and velocity of the car increases, and the Kalman gain decreases,
+	meaning that the measurements are trusted less and less. In theory, this means that the EKF takes more time to converge,
+	and here the plots verify this. In the opposite case,	when the measurement noise decreases, we would expect that the effects
+	are exactly the opposite. This is exactly the case, as it is illustrated in figure \ref{fig:q3:Q-100}.
+	The measurements are given a higher weight, as the Kalman gain suggests, since they are more reliable. Converging time decreases,
+	along with the covariance of the estimation errors. Notably, a low measurement error variance causes the estimation of the true
+	position and speed of the car to vary in a high degree, as opposed to the previous case, where the estimation was much smoother.
+	With regard to process noise, when its variance increases we would expect the measurement model to be weighted more and more, since
+	the estimation of the true state should be trusted less and less. This, of course, means a higher Kalman gain and a higher
+	variance of the modelled estimation error. These remarks are verified in comparing figures \ref{fig:q3:Qx100} and \ref{fig:q3:Rx100}.
+	Notably, the convergence time is not affected and, again, because the measurements are weighted more, the estimation of the position
+	and speed of the car change quickly over time. In the opposite case, the EKF's prediction is weighted more than the measurements,
+	and this means that both the error covariance and the Kalman gains will be lower. Notably, as it can be seen in figure
+	\ref{fig:q3:R-100} the estimate is smoother, but it takes more time for the EKF to converge.
+	When both process and measurement noise are high, their modelled covariance is high, and the Kalman gains are low, since 
+	the measurements cannot be trusted. Notably, when both are low, the Kalman gains converge to the same values, but through different
+	paths. In this case, convergence is quicker and the modelled covariance is, as expected, lower than having decreased the variance
+	of each error separately.
+	
+	
+\subsection{Question 4}
+
+\subsubsection{Changing $P_0$}
+
+	With respect to the initial conditions for the modelled covariance, if $P$ is large, then the uncertainty about the
+	true state is greater. This forces the Kalman gain to rise sharply, because now the measurements are to be trusted more
+	in order to compensate for the EKF's pessimistic estimation, before converging in approximately the same time as in the original case.
+	However, when the initial $P$ is small, the EKF trusts the estimates more than the measurements, and the Kalman gains rise but in a
+	slower manner than before. The time to converge in this case increases. In both cases the estimate error for the position is nearly
+	unchanged, however with respect to the velocity, in the first case it varies heavily and in the second one it decreases.
+	Figures \ref{fig:q4:P1000} and \ref{fig:q4:P001} illustrate the effect of changing the initial conditions of 
+	$P$ for $P_0' = P_0 \times 1000$ and $P_0' = P_0 \times 0.001$ respectively.
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P1000_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P1000_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P1000_fig_3}}
+
+	\caption{$P_0' = P_0 \times 1000$}
+	\label{fig:q4:P1000}
+\end{figure}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P001_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P001_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/P001_fig_3}}
+
+	\caption{$P_0' = P_0 \times 0.001$}
+	\label{fig:q4:P001}
+\end{figure}
+
+
+\subsubsection{Changing $\hat{x}_0$}
+
+	With regard to the initial estimate on the true state $\hat{x}$, it seems that the EKF is robust. 
+	Changing it by $10^{\pm3}$ has no effect in the rate of convergence, or the error of the estimates.
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat1000_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat1000_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat1000_fig_3}}
+
+	\caption{$\hat{x}_0' = \hat{x}_0 \times 1000$}
+	\label{fig:q4:xhat1000}
+\end{figure}
+
+\begin{figure}[H]
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat001_fig_1}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat001_fig_2}}
+	\scalebox{0.5}{\input{./figures/part_ii_q_4/xhat001_fig_3}}
+
+	\caption{$\hat{x}_0' = \hat{x}_0 \times 0.001$}
+	\label{fig:q4:xhat001}
+\end{figure}
