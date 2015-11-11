@@ -1,0 +1,113 @@
+\subsection{Question 1}
+
+	Since 
+
+	\begin{equation}
+		\hat{x}_t = g(u_t, x_{t-1}) + \epsilon_t
+	\end{equation}
+	and
+	\begin{equation}
+		z_t = h(x_t) + \delta_t
+	\end{equation}
+	
+	$u_t$ models a part of the dynamics between $x_{t-1}$ and $x_t$. So, it is an action that carries information about the 
+	change of state in the environment.
+	For example, $u_t$ can be the setting of the desired temperature in a room.
+		
+	On the other hand, $x_t$ is the environmental state at time $t$ and depends only on the state at the previous timestep $x_{t-1}$ and
+	the control $u_t$ at time $t$. As an example, $x_t$ can be the actual temperature of a room.
+	
+	$z_t$ is the measurement on $x_t$ and depends only on the environmental state $x_t$ at time $t$. 
+	For example $z_t$ can be the reading on a thermometer, when trying to estimate the true temperature of a room.
+	
+	
+\subsection{Question 2}
+
+	The uncertainty in the belief during a Kalman filter update step is given by
+	
+	\begin{equation}
+		\Sigma_t = (I-K_t C_t) \bar{\Sigma}_t
+		\label{eq:2.1}
+	\end{equation}
+	
+	where
+	
+	\begin{equation}
+		K_t = \bar{\Sigma_t} C_t^T (C_t \bar{\Sigma}_t C_t^T + Q_t)^{-1}
+		\label{eq:2.2}
+	\end{equation}
+	
+	
+	If we plug equation \ref{eq:2.2} into equation \ref{eq:2.1} and use equation the Sherman/Morrison formula, then
+	
+	\begin{equation}
+		\Sigma_t = \bar{\Sigma}_t-\bar{\Sigma_t} C_t^T (C_t \bar{\Sigma}_t C_t^T + Q_t)^{-1} C_t \bar{\Sigma}_t =
+			(\bar{\Sigma}_t^{-1} + C_t^T Q_t^{-1}C_t)^{-1}
+	\end{equation}
+	
+	where we know that $C_t^T Q_t^{-1}C_t$ is positive semi-definite. Hence, the uncertainty in the belief during an update
+	cannot increase.
+	
+
+\subsection{Question 3}
+
+	From lecture's 5 notes:
+	
+	\begin{equation}
+		\mu_t = \bar{\mu}_t + K_t (z_t - C_t \bar{\mu}_t) = (I - K_t C_t) \bar{\mu}_t  + K_t z_t = (I - W) \bar{\mu}_t + W \mu_{z}
+	\end{equation}
+	
+	where $W = \Sigma_t C_t^T Q_t^{-1} C_t$ and $C_t \mu_z = (z_t - \bar{z}_t + C_t \bar{\mu}_t)$. Hence, essentially the relation 
+	between $\Sigma_t$ and $Q_t$ decides the weighting between the measurements and the belief.
+	
+	
+\subsection{Question 4}
+
+	If $Q$ is large, then the Kalman Gain will be small and the filter would take more time to converge.
+	
+	
+\subsection{Question 5}
+
+	For the measurements to have an increased effect, the Kalman Gain should be large, 
+	since $\mu_t = \bar{\mu}_t + K_t (z_t - C_t \bar{\mu}_t)$. For the Kalman Gain to be large, $Q_t$, that is, the
+	uncertainty regarding the measurements should be small.
+	
+	
+\subsection{Question 6}
+
+	The belief uncertainty during prediction is given by equation \ref{eq:6.1}:
+	
+	\begin{equation}
+		\bar{\Sigma}_t = A_t \Sigma_{t-1} A_t^T + R_t
+		\label{eq:6.1}
+	\end{equation}
+	
+	If $A_t \geq I$ then $A_t \Sigma_{t-1} A_t^T$ increases, and noise ($R_t$) is added. 
+	Hence, in general, $\bar{\Sigma}_t$ increases but it depends on $A_t$ and $R_t$.
+	
+	
+\subsection{Question 7}
+\subsection{Question 8}
+
+	If there is no a priori knowledge about the distribution, then the mean of the Kalman Filter can be the MLE of the Gaussian belief.
+	If there is a priori knowledge about the distribution, then a Kalman Filter can be a MAP if the distribution is Gaussian.
+	
+	
+\subsection{Question 9}
+
+	The EKF revokes the assumption that a state is a linear function of its previous state, and applies the KF by approximating 
+	the non-linear function that is tangent to g at the mean of the posterior. Furthermore, $A_t x_{t-1} + B_t u_t$ is replaced by 
+	$g(u_t, x_{t-1})$, $C_t x_t$ by $h(x_t)$, $A_t$ by $G_t$ and $C_t$ by $H_t$.
+	
+
+\subsection{Question 10}
+
+	No. It depends on the the local nonlinearity of the $g$ function.
+	
+	
+\subsection{Question 11}
+	
+	We could increase the model uncertainties by increasing the covariances $Q_t$ and $R_t$.
+	
+
+\subsection{Question 12}

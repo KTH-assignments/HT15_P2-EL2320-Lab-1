@@ -1,0 +1,29 @@
+\subsection{Question 1}
+	In this case $\epsilon_k: 2 \times 1$, $\delta_k:$ scalar. In the general case, $\epsilon_k$ will be $N \times 1$, where $N$ is
+	the number of state variables, and $\delta_k$ will be $M \times 1$, where $M$ is the number of variables the EKF tries to estimate.
+	\\
+	A scalar Gaussian is characterized by a mean value $\mu$ and a variance $\sigma^2$. A white Gaussian has $\mu = 0$. 
+	In the general case, $\boldsymbol{\mu}$ is a single-column matrix and the scalar variance is replaced by a covariance matrix 
+	$\boldsymbol{\Sigma}$. In this case, a white Gaussian has $\boldsymbol{\mu} = \boldsymbol{0}$ and $\boldsymbol{\Sigma}$ is a
+	diagonal matrix because the noise in each state variable is independent of one another.
+	
+\subsection{Question 2}
+
+\begin{table}[!htb]
+	\centering
+    \begin{tabular}{l|l}
+    Variable & Usage                                                    \\ \hline
+    $x$        & The true state of the system.							  \\
+    $\hat{x}$  & The estimate of the true state of the system by the EKF.\\
+    $P$        & Estimate error covariance matrix.                       \\
+    $G$        & Identity matrix for dimensionality consistency.          \\
+    $D$        & Identity matrix for dimensionality consistency. Scalar here. \\
+    $Q$        & Process noise variance.          \\
+    $R$        & Measurement noise covariance matrix.                    \\
+    $wStdP$    & The actual (simulated) standard deviation of the noise in position.            \\
+    $wStdV$    & The actual (simulated) standard deviation of the noise in velocity.            \\
+    $vStd$     & The actual (simulated) standard deviation of the noise in position estimation. \\
+    $u$        & Control signal, the acceleration.                       \\
+    $PP$       & Estimate error covariances over time.                              \\
+    \end{tabular}
+\end{table}
