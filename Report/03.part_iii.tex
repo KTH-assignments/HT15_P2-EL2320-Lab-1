@@ -1,13 +1,72 @@
 \subsection{Question 5}
-	In equation 3 of the instructions, the prediction step is given by equation \ref{eq:part_iii_prediction}, 
-	while the update step is given by \ref{eq:part_iii_update}.
+
+	In equation 3 of the instructions, the prediction step is given by equation \ref{eq:part_iii_prediction3}, 
+	while the update step is given by \ref{eq:part_iii_update3}.
 	
 	\begin{equation}
 		\overline{bel}(x_t) = p(x_t | u_{1:t}, z_{1:t-1}, \bar{x}_0, M) = \int p(x_t | u_t, x_{t-1}) bel(x_{t-1}) dx_{t-1}
-		\label{eq:part_iii_prediction}
+		\label{eq:part_iii_prediction3}
 	\end{equation}
 	
 	\begin{equation}
 		bel(x_t) = p(x_t | u_{1:t}, z_{1:t}, \bar{x}_0, M) = \eta p(z_t | x_t, M) \overline{bel}(x_t)
-		\label{eq:part_iii_update}
+		\label{eq:part_iii_update3}
 	\end{equation}
+	
+	Since the prediction step at time $t$ refers to the belief about the state at time $t$ before incorporating the
+	measurements $z_t$, with regard to equation 2 in the instructions, the prediction step is given by factor in
+	\ref{eq:part_iii_prediction2}, while the update step is given by the factor in \ref{eq:part_iii_update2}.
+	
+	\begin{equation}
+		\int p(x_t | u_t, x_{t-1}) p(x_{t-1} | z_{1:t-1}, u_{1:t-1}, \bar{x}_0, M)) dx_{t-1}
+		\label{eq:part_iii_prediction2}
+	\end{equation}
+	
+	\begin{equation}
+		\eta p(z_t | x_t, M) \int p(x_t | u_t, x_{t-1}) p(x_{t-1} | z_{1:t-1}, u_{1:t-1}, \bar{x}_0, M)) dx_{t-1}
+		\label{eq:part_iii_update2}
+	\end{equation}
+	
+	
+\subsection{Question 6}
+
+	The measurements are independent of each other if-f the measurement noise is white Gaussian noise, which is in fact assumed here,
+	as the value of the Jacobian $H$ depends only on the value of $\hat{x}_t$ at time $t$. 
+	Then, the covariance matrix of the measurement noise distribution will be diagonal and all measurements will be uncorrelated
+	with each other.
+	
+	
+\subsection{Question 7}
+
+	Since $\delta_M$ is a probability, $0 \leq \delta_M \leq 1$. The inverse $\chi^2$ is monotonously ascending, hence a larger value for $\delta_M$
+	will result in a larger $\lambda_M$ threshold. The larger the threshold, the larger the Mahalanobis distance 
+	$D_M = (\overline{\nu}_t^i)^T (H_{t,j} \bar{\Sigma}_t (H_{t,j})^T + Q) (\overline{\nu}_t^i)$, which means that the smaller the uncertainty 
+	in measurement $Q$ is. Hence, a large value for $\delta_M$ will result in having more confidence on the measurements and, hence, less outlier rejections.
+	Conversely, a low value for $\delta_M$ will result in more rejections. As for the threshold $\lambda_M$, it follows the same reasoning. If we know that
+	the measurements are reliable, then $Q$ is small, and we can utilize a higher threshold. On the other hand, if the measurements are known to be spurious,
+	then a lower $\lambda_M$ threshold should be used, so as to take into account only the most reliable ones, which are the ones closest to the centroid of 
+	the Mahalanobis ellipse.
+	
+	
+\subsection{Question 8}
+	
+	If the first measurement to be incorporated is noisy, then the innovation will be non-zero and the estimated mean for that measurement will be shifted
+	erroneously. The covariance $\bar{\Sigma}$ will be incorrectly reduced, which will result in a higher Kalman gain in the next timestep. Then,
+	$S_{t,j}$ will be reduced, and the threshold on the Mahalanobis distance will increase, resulting in possibly valid measurements being rejected as outliers.
+	
+
+\subsection{Question 9}
+
+	In Alg 4 of the instructions, the first three assignments are not dependant on the observation $i$, however each one is computed $|z_t| \ times |M|$ times,
+	where $|z_t|$ is the number of measured parameters and $|M|$ the number of landmarks. Hence, these computations are redundant and could be made 
+	beforehand in a separate loop, so as to reduce $|z_t| \ times |M|$ to just $|M|$.
+	
+
+\subsection{Question 10}
+
+	Matrix $\mathbf{h_t}$ is of $2 \times 1$ dimensions. Hence, the measurement matrix $\mathbf{z_t}$ will also be of $2 \times 1$ dimensions. The same applies for the
+	innovation $\bar{\nu}_t^k$. $(\bar{\nu}_t^k)^T$ is of $1 \times 2$ dimensions, and $n$ of those vectors are stored in $(\bar{\nu}_t)^T$. Hence, $\bar{\nu}_t$ is of
+	$2n \times 1$ dimensions, where $n$ is the number of inliers. Analogously, $\bar{H}_t$ is of $2n \times 3$ dimensions. In the sequential update method, 
+	$\bar{\nu}_t$ and $\bar{H}_t$ have $2 \times 1$ and $2 \times 3$ dimensions respectively. This is to be expected, since in the batch update method all the 
+	observations are grouped together, whereas in the sequential one, each observation is treated separately. The higher dimensionality in the former case
+	will result in more computational costs than in the latter.
