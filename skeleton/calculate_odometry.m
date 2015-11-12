@@ -11,10 +11,30 @@
 %           mu(t-1):        3X1
 % Outputs:
 %           u(t):           3X1
-function u = calculate_odometry(e_R,e_L,E_T,B,R_R,R_L,delta_t,mu)
+function u = calculate_odometry(e_R, e_L, E_T, B, R_R, R_L, delta_t, mu)
+
 if ~delta_t
     u = [0;0;0];
     return;
 end
 % FILL IN HERE
+
+% Angular velocity of the right wheel
+omega_R = 2 * pi * e_R / (E_T * delta_t);
+
+% Angular velocity of the left wheel
+omega_L = 2 * pi * e_L / (E_T * delta_t);
+
+% Angular velocity of the robot
+omega = (omega_R * R_R - omega_L * R_L) / B;
+
+% Translational velocity of the robot
+v = (omega_R * R_R + omega_L * R_L) / 2;
+
+% Make sure -pi <= mu(t-1) <= pi
+ang = mod(mu + pi, 2 * pi) - pi;
+
+% Compound velocity of the robot
+u = [v * delta_t * cos(ang);  v * delta_t * sin(ang); omega * delta_t];
+
 end

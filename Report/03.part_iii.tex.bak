@@ -67,4 +67,6 @@
 	Matrix $\mathbf{h_t}$ is of $2 \times 1$ dimensions. Hence, the measurement matrix $\mathbf{z_t}$ will also be of $2 \times 1$ dimensions. The same applies for the
 	innovation $\bar{\nu}_t^k$. $(\bar{\nu}_t^k)^T$ is of $1 \times 2$ dimensions, and $n$ of those vectors are stored in $(\bar{\nu}_t)^T$. Hence, $\bar{\nu}_t$ is of
 	$2n \times 1$ dimensions, where $n$ is the number of inliers. Analogously, $\bar{H}_t$ is of $2n \times 3$ dimensions. In the sequential update method, 
-	$\bar{\nu}_t$
+	$\bar{\nu}_t$ and $\bar{H}_t$ have $2 \times 1$ and $2 \times 3$ dimensions respectively. This is to be expected, since in the batch update method all the 
+	observations are grouped together, whereas in the sequential one, each observation is treated separately. The higher dimensionality in the former case
+	will result in more computational costs than in the latter.

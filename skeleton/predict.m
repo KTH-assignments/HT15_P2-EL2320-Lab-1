@@ -8,6 +8,20 @@
 % Outputs:   
 %           mu_bar(t)         3X1
 %           sigma_bar(t)      3X3
-function [mu_bar,sigma_bar] = predict(mu,sigma,u,R)
+function [mu_bar,sigma_bar] = predict(mu, sigma, u, R)
 % FILL IN HERE
+
+% Compute g
+g = mu + u
+
+% mu_bar(t) = g by definition
+mu_bar = g
+
+% Compute the Jacobian of g
+G = [1 0 -u(2,1); 
+        0 1 u(1,1); 
+        0 0 1];
+
+% Compute sigma_bar
+sigma_bar = G * sigma * G' + R;
 end
