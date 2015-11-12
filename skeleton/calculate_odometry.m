@@ -32,7 +32,7 @@ omega = (omega_R * R_R - omega_L * R_L) / B;
 v = (omega_R * R_R + omega_L * R_L) / 2;
 
 % Make sure -pi <= mu(t-1) <= pi
-ang = mod(mu + pi, 2 * pi) - pi;
+ang = mod(mu(3,1) + pi, 2 * pi) - pi;
 
 % Compound velocity of the robot
 u = [v * delta_t * cos(ang);  v * delta_t * sin(ang); omega * delta_t];

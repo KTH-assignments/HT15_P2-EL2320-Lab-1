@@ -13,5 +13,15 @@
 %           sigma(t)        3X3
 function [mu,sigma] = batch_update(mu_bar,sigma_bar,H_bar,Q_bar,nu_bar)
 % FILL IN HERE
+
+% The Kalman gain
+K = sigma_bar * H_bar' * inv(H_bar * sigma_bar * H_bar' + Q_bar);
+
+% mu
+mu = mu_bar + K * nu_bar;
+
+% sigma
+sigma = (eye(3) - K * H_bar) * sigma_bar;
+
 sigma = (sigma + sigma')/2;
 end

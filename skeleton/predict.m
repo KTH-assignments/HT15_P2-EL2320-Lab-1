@@ -1,25 +1,25 @@
 % function [mu_bar,sigma_bar] = predict(mu,sigma,u,R)
 % This function should perform the prediction step.
 % Inputs:
-%           mu(t-1)           3X1   
+%           mu(t-1)           3X1
 %           sigma(t-1)        3X3
 %           u(t)              3X1
 %           R                 3X3
-% Outputs:   
+% Outputs:
 %           mu_bar(t)         3X1
 %           sigma_bar(t)      3X3
 function [mu_bar,sigma_bar] = predict(mu, sigma, u, R)
 % FILL IN HERE
 
 % Compute g
-g = mu + u
+g = mu + u;
 
 % mu_bar(t) = g by definition
-mu_bar = g
+mu_bar = g;
 
 % Compute the Jacobian of g
-G = [1 0 -u(2,1); 
-        0 1 u(1,1); 
+G = [1 0 -u(2,1);
+        0 1 u(1,1);
         0 0 1];
 
 % Compute sigma_bar
