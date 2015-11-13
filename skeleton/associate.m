@@ -32,7 +32,7 @@ S = [];
 psi = [];
 
 % For every landmark
-for j = 1:length(M)
+for j = 1:size(M, 2)
   z_hat(:,j) = observation_model(mu_bar, M, j);
   H(:,:,j) = jacobian_observation_model(mu_bar, M, j, z_hat(:,j), 1);
   S(:,:,j) = H(:,:,j) * sigma_bar * H(:,:,j)' + Q;

@@ -21,7 +21,7 @@ outlier = [];
 nu_bar = [];
 H_bar = [];
 
-for j = 1:length(z)
+for j = 1:size(z,2)
   [c_ret, outlier_ret, nu_ret, S_ret, H_ret] = associate(mu_bar, sigma_bar, z(:,j), M, Lambda_m, Q);
 
   c(j) = c_ret;

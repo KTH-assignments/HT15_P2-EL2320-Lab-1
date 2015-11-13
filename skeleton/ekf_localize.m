@@ -20,7 +20,7 @@ function [mu,sigma,outliers] = ekf_localize(mu,sigma,R,Q,z,known_associations,u,
 [mu_bar,sigma_bar] = predict(mu,sigma,u,R);
 n = size(z,2);
 USE_KNOWN_ASSOCIATIONS = 0;
-USE_BATCH_UPDATE = 0;
+USE_BATCH_UPDATE = 1;
 outliers = 0;
 count = 0;
 if USE_BATCH_UPDATE
@@ -37,7 +37,7 @@ if USE_BATCH_UPDATE
     end
     valid_ixs = find(~outlier); % the indices of inliers
     ix = [2*(valid_ixs-1)+1;2*(valid_ixs-1)+2];
-    ix = ix(:); 
+    ix = ix(:);
     nu_bar = nu_bar(ix);
     H_bar = H_bar(ix,:);
     n = length(valid_ixs);
@@ -46,7 +46,7 @@ if USE_BATCH_UPDATE
         ii= 2*i + (-1:0);
         Q_bar(ii,ii) = Q;
     end
-    [mu,sigma] = batch_update(mu_bar,sigma_bar,H_bar,Q_bar,nu_bar);   
+    [mu,sigma] = batch_update(mu_bar,sigma_bar,H_bar,Q_bar,nu_bar);
     outliers = sum(outlier);
 else
     for i = 1 : n
@@ -67,7 +67,7 @@ else
         nu_bar = squeeze(nu(:,c));
         S_bar = squeeze(S(:,:,c));
         H_bar = squeeze(H(:,:,c));
-        [mu_bar,sigma_bar] = update(mu_bar,sigma_bar,H_bar,S_bar,nu_bar);   
+        [mu_bar,sigma_bar] = update(mu_bar,sigma_bar,H_bar,S_bar,nu_bar);
     end
     mu = mu_bar;
     sigma = sigma_bar;

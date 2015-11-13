@@ -14,7 +14,6 @@
 function [mu_bar,sigma_bar] = update(mu_bar,sigma_bar,H_bar,S_bar,nu_bar)
 % FILL IN HERE
 
-
 % The Kalman gain
 K = sigma_bar * H_bar' * inv(S_bar);
 
@@ -22,7 +21,8 @@ K = sigma_bar * H_bar' * inv(S_bar);
 mu_bar = mu_bar + K * nu_bar;
 
 % sigma_bar
-sigma_bar = (eye(3) - K * H_bar) * sigma_bar
+sigma_bar = (eye(3) - K * H_bar) * sigma_bar;
 
 sigma_bar = (sigma_bar + sigma_bar')/2;
+
 end
