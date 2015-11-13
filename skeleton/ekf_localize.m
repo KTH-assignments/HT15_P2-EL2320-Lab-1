@@ -20,7 +20,7 @@ function [mu,sigma,outliers] = ekf_localize(mu,sigma,R,Q,z,known_associations,u,
 [mu_bar,sigma_bar] = predict(mu,sigma,u,R);
 n = size(z,2);
 USE_KNOWN_ASSOCIATIONS = 0;
-USE_BATCH_UPDATE = 1;
+USE_BATCH_UPDATE = 0;
 outliers = 0;
 count = 0;
 if USE_BATCH_UPDATE
@@ -50,7 +50,7 @@ if USE_BATCH_UPDATE
     outliers = sum(outlier);
 else
     for i = 1 : n
-        [c,outlier, nu, S, H] = associate(mu_bar,sigma_bar,z(:,i),M,Lambda_m,Q);
+        [c, outlier, nu, S, H] = associate(mu_bar,sigma_bar,z(:,i),M,Lambda_m,Q);
         map_id = find(Map_IDS == known_associations(i));
         if c ~= map_id
             display(sprintf('warning, %d th measurement(of landmark %d) was incorrectly associated to landmark %d, t=%d',i,map_id,c,t));
@@ -67,7 +67,7 @@ else
         nu_bar = squeeze(nu(:,c));
         S_bar = squeeze(S(:,:,c));
         H_bar = squeeze(H(:,:,c));
-        [mu_bar,sigma_bar] = update(mu_bar,sigma_bar,H_bar,S_bar,nu_bar);
+        [mu_bar, sigma_bar] = update(mu_bar,sigma_bar,H_bar,S_bar,nu_bar);
     end
     mu = mu_bar;
     sigma = sigma_bar;

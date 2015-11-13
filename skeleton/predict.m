@@ -19,8 +19,8 @@ mu_bar = g;
 
 % Compute the Jacobian of g
 G = [1 0 -u(2,1);
-        0 1 u(1,1);
-        0 0 1];
+     0 1 u(1,1);
+     0 0 1];
 
 % Compute sigma_bar
 sigma_bar = G * sigma * G' + R;
