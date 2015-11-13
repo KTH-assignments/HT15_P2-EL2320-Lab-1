@@ -57,9 +57,9 @@
 
 \subsection{Question 9}
 
-	In Alg 4 of the instructions, the first three assignments are not dependant on the observation $i$, however each one is computed $|z_t| \ times |M|$ times,
+	In Alg 4 of the instructions, the first three assignments are not dependant on the observation $i$, however each one is computed $|z_t| \times |M|$ times,
 	where $|z_t|$ is the number of measured parameters and $|M|$ the number of landmarks. Hence, these computations are redundant and could be made 
-	beforehand in a separate loop, so as to reduce $|z_t| \ times |M|$ to just $|M|$.
+	beforehand in a separate loop, so as to reduce $|z_t| \times |M|$ to just $|M|$.
 	
 
 \subsection{Question 10}
